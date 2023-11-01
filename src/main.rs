@@ -1,3 +1,4 @@
+use std::vec::Vec;
 fn check_case() {
     let mut idx = 0;
     let mut v = vec![1, 2, 3, 4, 5];
@@ -17,7 +18,15 @@ fn uncheck_case() {
     f();
     v[idx] = idx;
 }
+fn safedrop_case(){
+    let mut a = vec![1,2];
+    let ptr = a.as_mut_ptr();
+    unsafe{
+        let mut _v = Vec::from_raw_parts(ptr,2,2);
+    }
+}
 fn main() {
-    check_case();
-    uncheck_case();
+    // check_case();
+    // uncheck_case();
+    safedrop_case();
 }
