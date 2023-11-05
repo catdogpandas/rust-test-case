@@ -1,4 +1,9 @@
+pub mod buffer_overflow;
+pub mod dop;
+
 use std::vec::Vec;
+
+#[allow(dead_code)]
 fn check_case() {
     let mut idx = 0;
     let mut v = vec![1, 2, 3, 4, 5];
@@ -7,6 +12,8 @@ fn check_case() {
     }
     v[idx] = idx;
 }
+
+#[allow(dead_code)]
 fn uncheck_case() {
     let mut idx = 0;
     let mut v = vec![1, 2, 3, 4, 5];
@@ -18,6 +25,8 @@ fn uncheck_case() {
     f();
     v[idx] = idx;
 }
+
+#[allow(dead_code)]
 fn safedrop_case() {
     let mut a = vec![1, 2];
     let ptr = a.as_mut_ptr();
@@ -25,8 +34,11 @@ fn safedrop_case() {
         let mut _v = Vec::from_raw_parts(ptr, 2, 2);
     }
 }
+
 fn main() {
     // check_case();
     // uncheck_case();
-    safedrop_case();
+    // safedrop_case();
+    // buffer_overflow::buffer_overflow();
+    dop::dop();
 }
