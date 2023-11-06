@@ -1,4 +1,5 @@
 pub mod buffer_overflow;
+pub mod mirchecker_panic;
 pub mod dop;
 
 use std::vec::Vec;
@@ -40,5 +41,6 @@ fn main() {
     // uncheck_case();
     // safedrop_case();
     // buffer_overflow::buffer_overflow();
+    // mirchecker_panic::mirchecker_panic();
     dop::dop();
 }
