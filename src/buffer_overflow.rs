@@ -15,7 +15,7 @@ struct Hackvist {
 }
 
 #[allow(dead_code)]
-pub(crate) fn buffer_overflow() {
+pub(crate) fn check_case() {
     let mut args: Vec<OsString> = env::args_os().into_iter().collect();
     let first_arg: OsString = args.remove(1);
     let input_bytes: &[u8] = first_arg.as_bytes();

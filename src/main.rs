@@ -1,46 +1,14 @@
 pub mod buffer_overflow;
 pub mod mirchecker_panic;
 pub mod dop;
-
-use std::vec::Vec;
-
-#[allow(dead_code)]
-fn check_case() {
-    let mut idx = 0;
-    let mut v = vec![1, 2, 3, 4, 5];
-    while idx < 5 {
-        idx = idx + 1;
-    }
-    v[idx] = idx;
-}
-
-#[allow(dead_code)]
-fn uncheck_case() {
-    let mut idx = 0;
-    let mut v = vec![1, 2, 3, 4, 5];
-    let mut f = || {
-        while idx < 5 {
-            idx = idx + 1;
-        }
-    };
-    f();
-    v[idx] = idx;
-}
-
-#[allow(dead_code)]
-fn safedrop_case() {
-    let mut a = vec![1, 2];
-    let ptr = a.as_mut_ptr();
-    unsafe {
-        let mut _v = Vec::from_raw_parts(ptr, 2, 2);
-    }
-}
+pub mod double_free;
+pub mod out_of_bounds_access;
 
 fn main() {
-    // check_case();
-    // uncheck_case();
-    // safedrop_case();
-    // buffer_overflow::buffer_overflow();
+    buffer_overflow::check_case();
     // mirchecker_panic::mirchecker_panic();
-    dop::dop();
+    // dop::dop();
+    double_free::check_case();
+    // out_of_bounds_access::check_case();
+    // out_of_bounds_access::uncheck_case();
 }
