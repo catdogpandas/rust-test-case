@@ -8,6 +8,7 @@ struct Hackvist {
 
 /// 可被检测到：
 /// 不可被检测到：SafeDrop
+#[allow(dead_code)]
 pub(crate) fn check_case() {
     let input_string = String::from("testtesttesttestAAAAAAAA");
     let input_bytes: &[u8] = input_string.as_bytes();
