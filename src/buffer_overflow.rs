@@ -7,7 +7,7 @@ struct Hackvist {
 }
 
 /// 可被检测到：
-/// 不可被检测到：SafeDrop
+/// 不可被检测到：SafeDrop、Mir-Checker
 #[allow(dead_code)]
 pub(crate) fn check_case() {
     let input_string = String::from("testtesttesttestAAAAAAAA");

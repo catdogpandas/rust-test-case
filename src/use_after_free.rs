@@ -1,6 +1,8 @@
 //! Use After Free 测试样例
 
-/// 可被检测到：SafeDrop
+
+/// 不可被检测到：FFI-Checker
+/// 可被检测到：SafeDrop、Mir-Checker
 pub fn check_case() {
     let v = {
         let mut s = vec![1, 2, 3, 4, 5];
@@ -10,8 +12,8 @@ pub fn check_case() {
     println!("v: {:?}", v);
 }
 
-/// 不可被检测到：SafeDrop
-pub fn uncheck_case(){
+/// 不可被检测到：SafeDrop、FFI-Checker
+pub fn uncheck_case() {
     let v = {
         let mut s = vec![1, 2, 3, 4, 5];
         let mut f = || {
@@ -21,4 +23,25 @@ pub fn uncheck_case(){
         f()
     };
     println!("v: {:?}", v);
+}
+
+use libc::{c_void, free};
+/// 可被检测到：FFI-Checker
+pub fn ffi_check_case() {
+    let mut n = Box::new(1);
+    unsafe {
+        free(&mut *n as *const _ as *mut c_void);
+    }
+    *n = 2;
+}
+
+/// 不可被检测到：FFI-Checker
+pub fn ffi_uncheck_case() {
+    let mut n = Box::new(1);
+    let f_do = || unsafe {
+        free(&mut *n as *const _ as *mut c_void);
+    };
+    let mut f_caller: Box<dyn FnMut() -> ()> = Box::new(f_do);
+    f_caller();
+    // *n = 2;
 }
