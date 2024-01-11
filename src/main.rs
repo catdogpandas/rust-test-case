@@ -36,6 +36,7 @@ fn main() {
 
     // show case
     buffer_overflow::show_case();
+    double_free::dynamic_trait_show_case();
     dop::dop();
     mirchecker_panic::mirchecker_panic();
 }

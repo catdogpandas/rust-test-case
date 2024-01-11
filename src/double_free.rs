@@ -2,7 +2,7 @@
 
 use std::vec::Vec;
 
-/// 可被检测到：Safedrop
+/// 可被检测到：Safedrop、Static-checker、MIRAI
 pub fn check_case() {
     let mut a = vec![1, 2];
     let ptr = a.as_mut_ptr();
@@ -12,6 +12,7 @@ pub fn check_case() {
 }
 
 /// 不可被检测到：SafeDrop
+/// 可被检测到：Static-checker、MIRAI
 pub fn closure_case() {
     let mut a = vec![1, 2];
     let ptr = a.as_mut_ptr();
@@ -33,6 +34,7 @@ pub fn function_pointer_case() {
 }
 
 /// 高阶函数样例
+/// 可被检测到：Static-checker、MIRAI
 pub fn high_order_function_case() {
     let mut a = vec![1, 2];
     let ptr = a.as_mut_ptr();
@@ -67,4 +69,24 @@ pub fn ffi_uncheck_case() {
     let mut f_caller: Box<dyn FnMut() -> ()> = Box::new(f_do);
     f_caller();
     // *n = 2;
+}
+
+struct DummyType;
+trait DymmyTrait {
+    fn func(&self, _: *mut i32) {}
+}
+impl DymmyTrait for DummyType {
+    fn func(&self, ptr: *mut i32) {
+        unsafe {
+            let mut _v = Vec::from_raw_parts(ptr, 2, 2);
+        }
+    }
+}
+/// 动态类型展示样例
+pub fn dynamic_trait_show_case() {
+    let mut a = vec![1, 2];
+    let ptr = a.as_mut_ptr();
+    let dummy_type = DummyType;
+    let dyn_dymmy_trait: Box<dyn DymmyTrait> = Box::new(dummy_type);
+    dyn_dymmy_trait.func(ptr);
 }
