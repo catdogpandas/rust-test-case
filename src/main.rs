@@ -2,6 +2,7 @@ pub mod buffer_overflow;
 pub mod division_by_zero;
 pub mod dop;
 pub mod double_free;
+pub mod examples;
 pub mod integer_overflow;
 pub mod mirchecker_panic;
 pub mod out_of_bounds_access;
