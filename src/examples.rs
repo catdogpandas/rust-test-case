@@ -1,7 +1,3 @@
-pub fn print_summary_dyn(obj: &dyn Summary) {
-    print!("Summary = {}", obj.summarize());
-}
-
 /// 循环中的堆空间申请
 pub fn alloc_in_loop() {
     let mut v: Vec<Box<i32>> = Vec::new();
@@ -81,6 +77,32 @@ pub fn print_summary_news_article(obj: NewsArticle) {
 pub fn print_summary_tweet(obj: Tweet) {
     print!("Summary = {}", obj.summarize());
 }
+
+/// 动态分发
+pub fn print_summary_dyn(obj: &dyn Summary) {
+    print!("Summary = {}", obj.summarize());
+}
+
+/// 堆上动态trait对象
+pub fn heap_dyn_trait_obj() {
+    let mut heap_obj: Box<dyn Summary> = Box::new(NewsArticle {
+        author: String::from("aaa"),
+    });
+    println!("{}", heap_obj.summarize());
+}
+
+/// 栈上动态trait对象
+pub fn stack_dyn_trait_obj() {
+    let mut heap_obj: &dyn Summary = &NewsArticle {
+        author: String::from("aaa"),
+    };
+    println!("{}", heap_obj.summarize());
+}
+
+/// Box包装动态trait对象
+// struct Box {
+//     pointer: *mut dyn Summary,
+// }
 
 /// ownership
 pub fn ownership() {
