@@ -18,13 +18,9 @@ fn main() {
     double_free::closure_case();
     double_free::function_pointer_case();
     double_free::high_order_function_case();
-    double_free::ffi_check_case();
-    double_free::ffi_uncheck_case();
 
     use_after_free::check_case();
     use_after_free::uncheck_case();
-    use_after_free::ffi_check_case();
-    use_after_free::ffi_uncheck_case();
 
     out_of_bounds_access::check_case();
     out_of_bounds_access::uncheck_case();

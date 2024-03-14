@@ -48,28 +48,28 @@ fn high_order_function_caller<F: FnOnce() -> ()>(f: F) {
     f();
 }
 
-use libc::{c_void, free};
+// use libc::{c_void, free};
 
-/// 不可被检测到：FFI-Checker
-/// 可被检测到：SafeDrop
-pub fn ffi_check_case() {
-    let mut n = Box::new(1);
-    unsafe {
-        free(&mut *n as *const _ as *mut c_void);
-    }
-    // *n = 2;
-}
+// /// 不可被检测到：FFI-Checker
+// /// 可被检测到：SafeDrop
+// pub fn ffi_check_case() {
+//     let mut n = Box::new(1);
+//     unsafe {
+//         free(&mut *n as *const _ as *mut c_void);
+//     }
+//     // *n = 2;
+// }
 
-/// 不可被检测到：FFI-Checker
-pub fn ffi_uncheck_case() {
-    let mut n = Box::new(1);
-    let f_do = || unsafe {
-        free(&mut *n as *const _ as *mut c_void);
-    };
-    let mut f_caller: Box<dyn FnMut() -> ()> = Box::new(f_do);
-    f_caller();
-    // *n = 2;
-}
+// /// 不可被检测到：FFI-Checker
+// pub fn ffi_uncheck_case() {
+//     let mut n = Box::new(1);
+//     let f_do = || unsafe {
+//         free(&mut *n as *const _ as *mut c_void);
+//     };
+//     let mut f_caller: Box<dyn FnMut() -> ()> = Box::new(f_do);
+//     f_caller();
+//     // *n = 2;
+// }
 
 struct DummyType;
 trait DymmyTrait {
