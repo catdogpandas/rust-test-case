@@ -1,3 +1,14 @@
+/// 缓冲区溢出样例
+pub fn buffer_overflow() {
+    let mut buf = String::from("value");
+    unsafe { 
+        std::ptr::copy(
+            "sixsix".as_ptr(), 
+            buf.as_mut_ptr(),
+            6) 
+    }
+}
+
 /// 循环中的堆空间申请
 pub fn alloc_in_loop() {
     let mut v: Vec<Box<i32>> = Vec::new();
